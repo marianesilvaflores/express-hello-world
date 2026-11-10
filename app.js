@@ -35,6 +35,22 @@ app.get('/erro', (req, res, next) => {
   next(new Error('Bug simulado para o laboratório'));
 });
 
+app.get('/pokemon-publico', async (req, res) => {
+  try {
+    const response = await fetch('https://pokeapi.co/api/v2/pokemon/pikachu', {
+      signal: AbortSignal.timeout(10000)
+    });
+    if (!response.ok) throw new Error('A API pública retornou uma falha');
+    const data = await response.json();
+    res.json({ id: data.id, nome: data.name, altura: data.height, peso: data.weight,
+      tipos: data.types.map(item => item.type.name), fonte: 'PokeAPI' });
+  } catch (error) {
+    const timeout = error.name === 'TimeoutError';
+    res.status(timeout ? 504 : 502).json({ erro: timeout
+      ? 'A API pública demorou para responder.' : 'Não foi possível consultar a API pública.' });
+  }
+});
+
 app.use((error, req, res, next) => {
   console.error(error.message);
   res.status(500).json({ erro: 'Erro interno simulado ou inesperado.' });
