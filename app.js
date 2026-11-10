@@ -16,6 +16,10 @@ app.get('/meunome', (req, res) => {
   res.type('text').send('Meu nome é Mariane Silva Flores');
 });
 
+app.get('/tico', (req, res) => {
+  res.type('text').send('teco');
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 
