@@ -70,3 +70,6 @@ O arquivo `render.yaml` registra a configuração gratuita. Não contém credenc
 - [Documentação PokeAPI](https://pokeapi.co/docs/v2)
 
 Atividade acadêmica desenvolvida por Mariane Silva Flores com apoio de IA.
+
+A resposta da PokeAPI é mantida em cache em memória por cinco minutos para evitar consultas repetidas. O projeto utiliza npm e package-lock.json para a instalação reproduzível.
+

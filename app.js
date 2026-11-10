@@ -35,15 +35,20 @@ app.get('/erro', (req, res, next) => {
   next(new Error('Bug simulado para o laboratório'));
 });
 
+let pokemonCache;
+let pokemonCacheExpires = 0;
 app.get('/pokemon-publico', async (req, res) => {
+  if (pokemonCache && Date.now() < pokemonCacheExpires) return res.json(pokemonCache);
   try {
     const response = await fetch('https://pokeapi.co/api/v2/pokemon/pikachu', {
       signal: AbortSignal.timeout(10000)
     });
     if (!response.ok) throw new Error('A API pública retornou uma falha');
     const data = await response.json();
-    res.json({ id: data.id, nome: data.name, altura: data.height, peso: data.weight,
-      tipos: data.types.map(item => item.type.name), fonte: 'PokeAPI' });
+    pokemonCache = { id: data.id, nome: data.name, altura: data.height, peso: data.weight,
+      tipos: data.types.map(item => item.type.name), fonte: 'PokeAPI' };
+    pokemonCacheExpires = Date.now() + 5 * 60 * 1000;
+    res.json(pokemonCache);
   } catch (error) {
     const timeout = error.name === 'TimeoutError';
     res.status(timeout ? 504 : 502).json({ erro: timeout
