@@ -20,6 +20,12 @@ app.get('/tico', (req, res) => {
   res.type('text').send('teco');
 });
 
+// Ordem de entrada na equipe: inclui Pikachu, recebido, e exclui trocas temporárias.
+app.get('/pokemons', (req, res) => {
+  res.json(['Pikachu', 'Caterpie', 'Pidgeotto', 'Bulbasaur', 'Charmander',
+    'Squirtle', 'Krabby', 'Primeape', 'Muk', 'Tauros']);
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 
