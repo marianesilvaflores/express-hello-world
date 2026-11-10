@@ -26,6 +26,10 @@ app.get('/pokemons', (req, res) => {
     'Squirtle', 'Krabby', 'Primeape', 'Muk', 'Tauros']);
 });
 
+app.post('/series', (req, res) => {
+  res.json(['Brooklyn Nine-Nine', 'Miraculous: As Aventuras de Ladybug', 'Gilmore Girls']);
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 
