@@ -30,6 +30,16 @@ app.post('/series', (req, res) => {
   res.json(['Brooklyn Nine-Nine', 'Miraculous: As Aventuras de Ladybug', 'Gilmore Girls']);
 });
 
+app.get('/erro', (req, res, next) => {
+  // Erro intencional para o laboratório; o middleware evita encerrar o processo.
+  next(new Error('Bug simulado para o laboratório'));
+});
+
+app.use((error, req, res, next) => {
+  console.error(error.message);
+  res.status(500).json({ erro: 'Erro interno simulado ou inesperado.' });
+});
+
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 
